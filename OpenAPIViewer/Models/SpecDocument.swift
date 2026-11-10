@@ -1,12 +1,8 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-extension UTType {
-    static let openAPIYAML = UTType(exportedAs: "com.openai.openapi-viewer.yaml", conformingTo: .text)
-}
-
 struct SpecDocument: FileDocument {
-    static var readableContentTypes: [UTType] { [.openAPIYAML, .json] }
+    static var readableContentTypes: [UTType] { [.yaml, .json] }
 
     let text: String?
     let readError: String?
@@ -34,6 +30,14 @@ struct SpecDocument: FileDocument {
     }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        FileWrapper(regularFileWithContents: Data((text ?? "").utf8))
+        throw SpecDocumentError.readOnly
+    }
+}
+
+private enum SpecDocumentError: LocalizedError {
+    case readOnly
+
+    var errorDescription: String? {
+        "OpenAPI documents are read-only in OpenAPI Viewer."
     }
 }

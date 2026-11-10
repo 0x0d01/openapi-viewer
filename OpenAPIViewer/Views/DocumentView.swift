@@ -27,6 +27,7 @@ struct DocumentView: View {
     var body: some View {
         Group {
             if let sourceText {
+                let representedLoadID = loadID
                 ViewerWebView(
                     text: sourceText,
                     format: documentFormat,
@@ -35,10 +36,12 @@ struct DocumentView: View {
                     appearance: effectiveAppearance,
                     onReady: { isViewerReady = true },
                     onRendered: { _ in
+                        guard representedLoadID == loadID else { return }
                         guard !isReadingFromDisk else { return }
                         isLoading = false
                     },
                     onError: { message in
+                        guard representedLoadID == loadID, !isReadingFromDisk else { return }
                         isLoading = false; loadError = message
                     }
                 )

@@ -22,19 +22,6 @@
 	<string>NSApplication</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.developer-tools</string>
-	<key>UTExportedTypeDeclarations</key>
-	<array>
-		<dict>
-			<key>UTTypeIdentifier</key>
-			<string>com.openai.openapi-viewer.yaml</string>
-			<key>UTTypeDescription</key>
-			<string>OpenAPI YAML document</string>
-			<key>UTTypeConformsTo</key>
-			<array><string>public.text</string></array>
-			<key>UTTypeTagSpecification</key>
-			<dict><key>public.filename-extension</key><array><string>yaml</string><string>yml</string></array><key>public.mime-type</key><string>application/yaml</string></dict>
-		</dict>
-	</array>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -45,7 +32,7 @@
 			<key>LSHandlerRank</key>
 			<string>Alternate</string>
 			<key>LSItemContentTypes</key>
-			<array><string>com.openai.openapi-viewer.yaml</string></array>
+			<array><string>public.yaml</string></array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeName</key>

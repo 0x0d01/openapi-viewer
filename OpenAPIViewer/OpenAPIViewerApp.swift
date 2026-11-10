@@ -8,6 +8,7 @@ struct OpenAPIViewerApp: App {
         }
         .commands {
             CommandGroup(replacing: .newItem) {}
+            CommandGroup(replacing: .saveItem) {}
         }
     }
 }
