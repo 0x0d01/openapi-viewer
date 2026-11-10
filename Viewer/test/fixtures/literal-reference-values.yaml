@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: Example Data API
+  version: 1.0.0
+paths:
+  /item:
+    get:
+      responses:
+        '200':
+          description: Example values are literal user data
+          content:
+            application/json:
+              example:
+                $ref: https://example.invalid/data
+              examples:
+                sample:
+                  value:
+                    $ref: ../literal.json
+x-client-data:
+  $ref: https://example.invalid/extension

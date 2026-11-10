@@ -1,0 +1,25 @@
+openapi: 3.1.0
+info:
+  title: Path Reference API
+  version: 1.0.0
+paths:
+  /source:
+    get:
+      tags: [inventory]
+      summary: List source records
+      responses:
+        '200':
+          description: Records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+  /alias:
+    $ref: '#/paths/~1source'
+components:
+  schemas:
+    Record:
+      type: object
+      properties:
+        id:
+          type: string

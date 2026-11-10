@@ -1,0 +1,54 @@
+html,
+body,
+#swagger-ui {
+  min-height: 100%;
+  margin: 0;
+}
+
+#swagger-ui [hidden] {
+  display: none !important;
+}
+
+#swagger-ui a[href='https://openapi-viewer.invalid/openapi.json']
+{
+  display: none !important;
+}
+
+body {
+  background: #fff;
+  color: #202124;
+}
+
+html[data-appearance='dark'] body {
+  background: #1c1c1e;
+  color: #f2f2f7;
+}
+
+html[data-appearance='dark'] .swagger-ui,
+html[data-appearance='dark'] .swagger-ui .info .title,
+html[data-appearance='dark'] .swagger-ui .opblock .opblock-summary-description,
+html[data-appearance='dark'] .swagger-ui .opblock .opblock-summary-path,
+html[data-appearance='dark'] .swagger-ui .opblock .opblock-summary-method,
+html[data-appearance='dark'] .swagger-ui .parameter__name,
+html[data-appearance='dark'] .swagger-ui .parameter__type,
+html[data-appearance='dark'] .swagger-ui .response-col_status,
+html[data-appearance='dark'] .swagger-ui section.models h4,
+html[data-appearance='dark'] .swagger-ui .model-title,
+html[data-appearance='dark'] .swagger-ui .model {
+  color: #f2f2f7;
+}
+
+html[data-appearance='dark'] .swagger-ui .opblock,
+html[data-appearance='dark'] .swagger-ui .scheme-container,
+html[data-appearance='dark'] .swagger-ui section.models,
+html[data-appearance='dark'] .swagger-ui .model-box,
+html[data-appearance='dark'] .swagger-ui .opblock .opblock-section-header {
+  background: #2c2c2e;
+}
+
+html[data-appearance='dark'] .swagger-ui .opblock .opblock-section-header,
+html[data-appearance='dark'] .swagger-ui .model-box,
+html[data-appearance='dark'] .swagger-ui table thead tr td,
+html[data-appearance='dark'] .swagger-ui table thead tr th {
+  border-color: #545458;
+}

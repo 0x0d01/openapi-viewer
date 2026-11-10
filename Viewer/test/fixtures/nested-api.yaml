@@ -1,0 +1,85 @@
+openapi: 3.1.0
+info:
+  title: Shelter API
+  version: 1.2.0
+  description: |-
+    Supports **markdown**, quotes, `backticks`, literal HTML text like <script>alert('no')</script>,
+    and remote image Markdown ![tracking image](https://example.invalid/tracker.png).
+paths:
+  /pets/{petId}:
+    parameters:
+      - name: petId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/PetId'
+    get:
+      tags:
+        - pets
+      summary: Find a pet by identifier
+      operationId: findPet
+      parameters:
+        - name: include
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: A nested pet record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+              examples:
+                sample:
+                  value:
+                    id: pet-1
+                    owner:
+                      name: Pat
+                      address:
+                        city: Bangkok
+        '404':
+          description: Pet was not found
+  /pets:
+    post:
+      tags: [pets]
+      summary: Create a pet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+      responses:
+        '201':
+          description: Created
+components:
+  schemas:
+    PetId:
+      type: string
+      pattern: '^pet-[0-9]+$'
+    Pet:
+      type: object
+      required: [id, owner]
+      properties:
+        id:
+          $ref: '#/components/schemas/PetId'
+        owner:
+          $ref: '#/components/schemas/Owner'
+        status:
+          type: string
+          enum: [available, adopted]
+    Owner:
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+    Address:
+      type: object
+      properties:
+        city:
+          type: string

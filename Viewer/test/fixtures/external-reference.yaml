@@ -1,0 +1,14 @@
+openapi: 3.0.3
+info:
+  title: External Reference Fixture
+  version: 1.0.0
+paths:
+  /unsafe:
+    get:
+      responses:
+        '200':
+          description: External reference must be blocked
+          content:
+            application/json:
+              schema:
+                $ref: https://example.invalid/schema.json

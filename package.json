@@ -1,0 +1,32 @@
+{
+  "name": "openapi-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint Viewer/src Viewer/test Viewer/build.mjs eslint.config.js",
+    "format:check": "prettier --check Viewer/src Viewer/test Viewer/build.mjs Viewer/index.html Viewer/viewer.css Viewer/THIRD-PARTY-LICENSES.md eslint.config.js .prettierrc.json package.json .agents/*.md README.md",
+    "test": "node --test Viewer/test/*.test.js",
+    "build": "node Viewer/build.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "type": "module",
+  "dependencies": {
+    "jsonc-parser": "3.3.1",
+    "swagger-ui-dist": "5.34.1",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "esbuild": "0.28.2",
+    "eslint": "10.14.0",
+    "prettier": "3.6.2"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "overrides": {
+    "minimatch": "11.0.1"
+  }
+}
