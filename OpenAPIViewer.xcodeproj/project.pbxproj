@@ -1,0 +1,99 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* OpenAPIViewerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000001 /* OpenAPIViewerApp.swift */; };
+		A10000000000000000000002 /* SpecDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000002 /* SpecDocument.swift */; };
+		A10000000000000000000003 /* DocumentReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000003 /* DocumentReader.swift */; };
+		A10000000000000000000004 /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000004 /* DocumentView.swift */; };
+		A10000000000000000000005 /* ViewerWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000005 /* ViewerWebView.swift */; };
+		A10000000000000000000006 /* DocumentReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000006 /* DocumentReaderTests.swift */; };
+		A10000000000000000000007 /* OpenAPIViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000007 /* OpenAPIViewerUITests.swift */; };
+		A10000000000000000000008 /* ViewerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000012 /* ViewerIntegrationTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C10000000000000000000001 /* PBXContainerItemProxy */ = {isa = PBXContainerItemProxy; containerPortal = D10000000000000000000001 /* Project object */; proxyType = 1; remoteGlobalIDString = E10000000000000000000001; remoteInfo = OpenAPIViewer; };
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B10000000000000000000001 /* OpenAPIViewerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPIViewerApp.swift; sourceTree = "<group>"; };
+		B10000000000000000000002 /* SpecDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecDocument.swift; sourceTree = "<group>"; };
+		B10000000000000000000003 /* DocumentReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReader.swift; sourceTree = "<group>"; };
+		B10000000000000000000004 /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
+		B10000000000000000000005 /* ViewerWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewerWebView.swift; sourceTree = "<group>"; };
+		B10000000000000000000006 /* DocumentReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReaderTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000007 /* OpenAPIViewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAPIViewerUITests.swift; sourceTree = "<group>"; };
+		B10000000000000000000008 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B10000000000000000000009 /* OpenAPIViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAPIViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000010 /* OpenAPIViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenAPIViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000011 /* OpenAPIViewerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenAPIViewerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000012 /* ViewerIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewerIntegrationTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F10000000000000000000001 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		F10000000000000000000002 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		F10000000000000000000003 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		G10000000000000000000001 = {isa = PBXGroup; children = (G10000000000000000000002 /* OpenAPIViewer */, G10000000000000000000003 /* OpenAPIViewerTests */, G10000000000000000000004 /* OpenAPIViewerUITests */, G10000000000000000000005 /* Products */); sourceTree = "<group>"; };
+		G10000000000000000000002 /* OpenAPIViewer */ = {isa = PBXGroup; path = OpenAPIViewer; sourceTree = "<group>"; children = (B10000000000000000000001 /* OpenAPIViewerApp.swift */, G10000000000000000000006 /* Models */, G10000000000000000000007 /* Views */, G10000000000000000000008 /* Resources */); };
+		G10000000000000000000003 /* OpenAPIViewerTests */ = {isa = PBXGroup; path = OpenAPIViewerTests; sourceTree = "<group>"; children = (B10000000000000000000006 /* DocumentReaderTests.swift */, B10000000000000000000012 /* ViewerIntegrationTests.swift */); };
+		G10000000000000000000004 /* OpenAPIViewerUITests */ = {isa = PBXGroup; path = OpenAPIViewerUITests; sourceTree = "<group>"; children = (B10000000000000000000007 /* OpenAPIViewerUITests.swift */); };
+		G10000000000000000000005 /* Products */ = {isa = PBXGroup; name = Products; sourceTree = "<group>"; children = (B10000000000000000000009 /* OpenAPIViewer.app */, B10000000000000000000010 /* OpenAPIViewerTests.xctest */, B10000000000000000000011 /* OpenAPIViewerUITests.xctest */); };
+		G10000000000000000000006 /* Models */ = {isa = PBXGroup; path = Models; sourceTree = "<group>"; children = (B10000000000000000000002 /* SpecDocument.swift */, B10000000000000000000003 /* DocumentReader.swift */); };
+		G10000000000000000000007 /* Views */ = {isa = PBXGroup; path = Views; sourceTree = "<group>"; children = (B10000000000000000000004 /* DocumentView.swift */, B10000000000000000000005 /* ViewerWebView.swift */); };
+		G10000000000000000000008 /* Resources */ = {isa = PBXGroup; path = Resources; sourceTree = "<group>"; children = (B10000000000000000000008 /* Info.plist */); };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E10000000000000000000001 /* OpenAPIViewer */ = {isa = PBXNativeTarget; buildConfigurationList = H10000000000000000000002 /* Build configuration list for PBXNativeTarget "OpenAPIViewer" */; buildPhases = (I10000000000000000000001 /* Sources */, F10000000000000000000001 /* Frameworks */, J10000000000000000000001 /* Bundle Viewer assets */); buildRules = (); dependencies = (); name = OpenAPIViewer; productName = OpenAPIViewer; productReference = B10000000000000000000009 /* OpenAPIViewer.app */; productType = "com.apple.product-type.application"; };
+		E10000000000000000000002 /* OpenAPIViewerTests */ = {isa = PBXNativeTarget; buildConfigurationList = H10000000000000000000003 /* Build configuration list for PBXNativeTarget "OpenAPIViewerTests" */; buildPhases = (I10000000000000000000002 /* Sources */, F10000000000000000000002 /* Frameworks */); buildRules = (); dependencies = (K10000000000000000000001 /* PBXTargetDependency */); name = OpenAPIViewerTests; productName = OpenAPIViewerTests; productReference = B10000000000000000000010 /* OpenAPIViewerTests.xctest */; productType = "com.apple.product-type.bundle.unit-test"; };
+		E10000000000000000000003 /* OpenAPIViewerUITests */ = {isa = PBXNativeTarget; buildConfigurationList = H10000000000000000000004 /* Build configuration list for PBXNativeTarget "OpenAPIViewerUITests" */; buildPhases = (I10000000000000000000003 /* Sources */, F10000000000000000000003 /* Frameworks */); buildRules = (); dependencies = (K10000000000000000000002 /* PBXTargetDependency */); name = OpenAPIViewerUITests; productName = OpenAPIViewerUITests; productReference = B10000000000000000000011 /* OpenAPIViewerUITests.xctest */; productType = "com.apple.product-type.bundle.ui-testing"; };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D10000000000000000000001 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 2700; TargetAttributes = {E10000000000000000000001 = {CreatedOnToolsVersion = 27.1; }; E10000000000000000000002 = {CreatedOnToolsVersion = 27.1; }; E10000000000000000000003 = {CreatedOnToolsVersion = 27.1; }; }; }; buildConfigurationList = H10000000000000000000001 /* Build configuration list for PBXProject "OpenAPIViewer" */; compatibilityVersion = "Xcode 16.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = G10000000000000000000001; productRefGroup = G10000000000000000000005 /* Products */; projectDirPath = ""; projectRoot = ""; targets = (E10000000000000000000001 /* OpenAPIViewer */, E10000000000000000000002 /* OpenAPIViewerTests */, E10000000000000000000003 /* OpenAPIViewerUITests */); };
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		J10000000000000000000001 /* Bundle Viewer assets */ = {isa = PBXShellScriptBuildPhase; alwaysOutOfDate = 1; buildActionMask = 2147483647; files = (); inputPaths = (); name = "Bundle Viewer assets"; outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = "set -eu\nSOURCE=\"$SRCROOT/Viewer/dist\"\nDEST=\"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/Viewer/dist\"\nif [ ! -d \"$SOURCE\" ]; then\n  echo \"error: Viewer/dist is missing. Run npm run build from the repository root before building OpenAPIViewer.\"\n  exit 1\nfi\nrm -rf \"$DEST\"\nmkdir -p \"$DEST\"\ncp -R \"$SOURCE/.\" \"$DEST/\"\n"; };
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		I10000000000000000000001 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000001 /* OpenAPIViewerApp.swift in Sources */, A10000000000000000000002 /* SpecDocument.swift in Sources */, A10000000000000000000003 /* DocumentReader.swift in Sources */, A10000000000000000000004 /* DocumentView.swift in Sources */, A10000000000000000000005 /* ViewerWebView.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+		I10000000000000000000002 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000006 /* DocumentReaderTests.swift in Sources */, A10000000000000000000008 /* ViewerIntegrationTests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+		I10000000000000000000003 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000007 /* OpenAPIViewerUITests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		K10000000000000000000001 /* PBXTargetDependency */ = {isa = PBXTargetDependency; target = E10000000000000000000001 /* OpenAPIViewer */; targetProxy = C10000000000000000000001 /* PBXContainerItemProxy */; };
+		K10000000000000000000002 /* PBXTargetDependency */ = {isa = PBXTargetDependency; target = E10000000000000000000001 /* OpenAPIViewer */; targetProxy = C10000000000000000000001 /* PBXContainerItemProxy */; };
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		L10000000000000000000001 /* Debug project */ = {isa = XCBuildConfiguration; buildSettings = {ARCHS = arm64; MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; SWIFT_VERSION = 5.0; }; name = Debug; };
+		L10000000000000000000002 /* Release project */ = {isa = XCBuildConfiguration; buildSettings = {ARCHS = arm64; MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; SWIFT_VERSION = 5.0; }; name = Release; };
+		L10000000000000000000003 /* Debug app */ = {isa = XCBuildConfiguration; buildSettings = {ARCHS = arm64; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; ENABLE_TESTABILITY = YES; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = OpenAPIViewer/Resources/Info.plist; MACOSX_DEPLOYMENT_TARGET = 14.0; PRODUCT_BUNDLE_IDENTIFIER = com.openai.OpenAPIViewer; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; }; name = Debug; };
+		L10000000000000000000004 /* Release app */ = {isa = XCBuildConfiguration; buildSettings = {ARCHS = arm64; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = OpenAPIViewer/Resources/Info.plist; MACOSX_DEPLOYMENT_TARGET = 14.0; PRODUCT_BUNDLE_IDENTIFIER = com.openai.OpenAPIViewer; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_VERSION = 5.0; }; name = Release; };
+		L10000000000000000000005 /* Debug tests */ = {isa = XCBuildConfiguration; buildSettings = {ARCHS = arm64; BUNDLE_LOADER = "$(TEST_HOST)"; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = YES; MACOSX_DEPLOYMENT_TARGET = 14.0; PRODUCT_BUNDLE_IDENTIFIER = com.openai.OpenAPIViewerTests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenAPIViewer.app/Contents/MacOS/OpenAPIViewer"; }; name = Debug; };
+		L10000000000000000000006 /* Release tests */ = {isa = XCBuildConfiguration; buildSettings = {ARCHS = arm64; BUNDLE_LOADER = "$(TEST_HOST)"; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = YES; MACOSX_DEPLOYMENT_TARGET = 14.0; PRODUCT_BUNDLE_IDENTIFIER = com.openai.OpenAPIViewerTests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenAPIViewer.app/Contents/MacOS/OpenAPIViewer"; }; name = Release; };
+		L10000000000000000000007 /* Debug UI tests */ = {isa = XCBuildConfiguration; buildSettings = {ARCHS = arm64; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = YES; MACOSX_DEPLOYMENT_TARGET = 14.0; PRODUCT_BUNDLE_IDENTIFIER = com.openai.OpenAPIViewerUITests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TEST_TARGET_NAME = OpenAPIViewer; }; name = Debug; };
+		L10000000000000000000008 /* Release UI tests */ = {isa = XCBuildConfiguration; buildSettings = {ARCHS = arm64; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = YES; MACOSX_DEPLOYMENT_TARGET = 14.0; PRODUCT_BUNDLE_IDENTIFIER = com.openai.OpenAPIViewerUITests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TEST_TARGET_NAME = OpenAPIViewer; }; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		H10000000000000000000001 /* Build configuration list for PBXProject "OpenAPIViewer" */ = {isa = XCConfigurationList; buildConfigurations = (L10000000000000000000001 /* Debug project */, L10000000000000000000002 /* Release project */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		H10000000000000000000002 /* Build configuration list for PBXNativeTarget "OpenAPIViewer" */ = {isa = XCConfigurationList; buildConfigurations = (L10000000000000000000003 /* Debug app */, L10000000000000000000004 /* Release app */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		H10000000000000000000003 /* Build configuration list for PBXNativeTarget "OpenAPIViewerTests" */ = {isa = XCConfigurationList; buildConfigurations = (L10000000000000000000005 /* Debug tests */, L10000000000000000000006 /* Release tests */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		H10000000000000000000004 /* Build configuration list for PBXNativeTarget "OpenAPIViewerUITests" */ = {isa = XCConfigurationList; buildConfigurations = (L10000000000000000000007 /* Debug UI tests */, L10000000000000000000008 /* Release UI tests */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = D10000000000000000000001 /* Project object */;
+}

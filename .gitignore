@@ -1,0 +1,17 @@
+.DS_Store
+DerivedData/
+.build/
+node_modules/
+Viewer/node_modules/
+Viewer/dist/
+Viewer/.npm/
+Viewer/npm-debug.log*
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.swp
