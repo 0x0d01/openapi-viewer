@@ -44,6 +44,18 @@ export function createDocumentOutline(spec) {
     target: { kind: 'tag', tag },
     children: operations,
   }));
+  if (spec.info) {
+    children.unshift({
+      label: spec.info.title || 'API information',
+      target: { kind: 'info' },
+    });
+  }
+  if (Array.isArray(spec.servers) && spec.servers.length) {
+    children.splice(spec.info ? 1 : 0, 0, {
+      label: 'Servers',
+      target: { kind: 'servers' },
+    });
+  }
   const schemaNames = Object.keys(spec.components?.schemas ?? {});
   if (schemaNames.length) {
     children.push({

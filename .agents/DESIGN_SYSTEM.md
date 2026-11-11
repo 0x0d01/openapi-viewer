@@ -19,5 +19,5 @@
 
 - Swagger UI owns operation grouping, HTTP method colors, schemas, parameters, request bodies, and responses. Native UI must not duplicate these structures.
 - The native search field filters the rendered operation list by path, method, tag, or summary.
-- The web viewer may add a narrow, collapsible outline beside Swagger UI. It indexes tags and operations plus reusable schemas, and navigates the existing rendered content without recreating its presentation. The outline has an independent scroll area; the document body scrolls beside it.
+- The web viewer may add a narrow, collapsible outline beside Swagger UI. It indexes API information, servers, tags and operations plus reusable schemas, and navigates the existing rendered content without recreating its presentation. Filtered operations remain visible but disabled in the outline. The outline has an independent scroll area; the document body scrolls beside it.
 - Keep the web content readable at different window sizes and in both system appearances; do not impose a fixed content width from the native shell.

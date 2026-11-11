@@ -16,6 +16,12 @@ let operationObserver = null;
 
 function findOutlineTarget(target) {
   if (!target || !activeMount) return null;
+  if (target.kind === 'info') {
+    return activeMount.querySelector('.information-container');
+  }
+  if (target.kind === 'servers') {
+    return activeMount.querySelector('.scheme-container');
+  }
   if (target.kind === 'tag') {
     return [...activeMount.querySelectorAll('.opblock-tag')].find(
       (heading) => heading.dataset.tag === target.tag,
@@ -42,6 +48,16 @@ function findOutlineTarget(target) {
     return document.getElementById(`model-${target.name}`);
   }
   return null;
+}
+
+function updateOutlineOperationAvailability() {
+  for (const button of document.querySelectorAll('.outline-operation')) {
+    const operation = findOutlineTarget(button.outlineTarget);
+    button.disabled =
+      !operation ||
+      operation.hidden ||
+      operation.closest('.opblock-tag-section')?.hidden;
+  }
 }
 
 function scrollToOutlineTarget(target) {
@@ -82,6 +98,10 @@ function renderOutline(spec) {
         const button = document.createElement('button');
         button.type = 'button';
         button.textContent = node.label;
+        if (node.target.kind === 'operation') {
+          button.classList.add('outline-operation');
+          button.outlineTarget = node.target;
+        }
         button.addEventListener('click', () =>
           scrollToOutlineTarget(node.target),
         );
@@ -200,6 +220,7 @@ function applyOperationFilter(query, root = activeMount) {
       !operations.some((operation) => !operation.hidden) &&
       !tagMatches;
   }
+  updateOutlineOperationAvailability();
   return operationCount;
 }
 

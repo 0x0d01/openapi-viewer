@@ -228,22 +228,26 @@ test('builds a hierarchical outline for tagged operations and schemas', async ()
 
   assert.deepEqual(
     outline.map((node) => node.label),
-    ['pets', 'Components'],
+    ['Shelter API', 'pets', 'Components'],
   );
+  assert.deepEqual(outline[0], {
+    label: 'Shelter API',
+    target: { kind: 'info' },
+  });
   assert.deepEqual(
-    outline[0].children.map((node) => node.label),
+    outline[1].children.map((node) => node.label),
     ['GET /pets/{petId}', 'POST /pets'],
   );
-  assert.equal(outline[0].target.kind, 'tag');
-  assert.deepEqual(outline[0].children[0].target, {
+  assert.equal(outline[1].target.kind, 'tag');
+  assert.deepEqual(outline[1].children[0].target, {
     kind: 'operation',
     tag: 'pets',
     method: 'get',
     path: '/pets/{petId}',
   });
-  assert.equal(outline[1].children[0].label, 'Schemas');
+  assert.equal(outline[2].children[0].label, 'Schemas');
   assert.deepEqual(
-    outline[1].children[0].children.map((node) => node.label),
+    outline[2].children[0].children.map((node) => node.label),
     ['PetId', 'Pet', 'Owner', 'Address'],
   );
 });
@@ -255,6 +259,10 @@ test('groups untagged path operations under the default tag', () => {
   );
 
   assert.deepEqual(createDocumentOutline(parsed.spec), [
+    {
+      label: 'API',
+      target: { kind: 'info' },
+    },
     {
       label: 'default',
       target: { kind: 'tag', tag: 'default' },
@@ -270,6 +278,18 @@ test('groups untagged path operations under the default tag', () => {
         },
       ],
     },
+  ]);
+});
+
+test('adds a navigable servers entry when servers are present', () => {
+  const parsed = parseSpec(
+    'openapi: 3.0.3\ninfo: { title: API, version: 1 }\nservers: [{ url: https://api.example.invalid }]\npaths: {}\n',
+    'yaml',
+  );
+
+  assert.deepEqual(createDocumentOutline(parsed.spec), [
+    { label: 'API', target: { kind: 'info' } },
+    { label: 'Servers', target: { kind: 'servers' } },
   ]);
 });
 
