@@ -80,10 +80,9 @@ struct DocumentView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .automatic) {
+            ToolbarItem(placement: .principal) {
                 TextField("Filter operations", text: $filter)
                     .textFieldStyle(.roundedBorder)
-                    .padding(.leading, 8)
                     .frame(minWidth: 190, idealWidth: 250)
                     .accessibilityLabel("Filter operations by path, method, tag, or summary")
             }
@@ -96,9 +95,15 @@ struct DocumentView: View {
             }
             ToolbarItem(placement: .automatic) {
                 Menu {
-                    Picker("Appearance", selection: $appearanceState.choice) {
-                        ForEach(AppearanceChoice.allCases) { choice in
-                            Text(choice.label).tag(choice)
+                    ForEach(AppearanceChoice.allCases) { choice in
+                        Button {
+                            appearanceState.choice = choice
+                        } label: {
+                            if appearanceState.choice == choice {
+                                Label(choice.label, systemImage: "checkmark")
+                            } else {
+                                Text(choice.label)
+                            }
                         }
                     }
                 } label: {
