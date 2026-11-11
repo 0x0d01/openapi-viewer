@@ -26,6 +26,7 @@ body {
   border-right: 1px solid #d1d1d6;
   background: #f7f7f8;
   color: #202124;
+  font-family: sans-serif;
 }
 
 #outline-sidebar[hidden] {
