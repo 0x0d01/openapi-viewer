@@ -8,6 +8,7 @@ struct DocumentView: View {
     @State private var isReadingFromDisk = false
     @State private var isViewerReady = false
     @State private var filter = ""
+    @FocusState private var isFilterFocused: Bool
     @StateObject private var appearanceState: DocumentAppearanceState
     @State private var loadID = UUID().uuidString
     @State private var reloadID = 0
@@ -80,11 +81,15 @@ struct DocumentView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                TextField("Filter operations", text: $filter)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 250)
-                    .accessibilityLabel("Filter operations by path, method, tag, or summary")
+            if #available(macOS 26.0, *) {
+                ToolbarItem(placement: .principal) {
+                    filterField
+                }
+                .sharedBackgroundVisibility(.hidden)
+            } else {
+                ToolbarItem(placement: .principal) {
+                    filterField
+                }
             }
             ToolbarItem(placement: .automatic) {
                 Button(action: reload) {
@@ -131,6 +136,24 @@ struct DocumentView: View {
             loadError = newValue
             isLoading = false
         }
+    }
+
+    private var filterField: some View {
+        TextField("Filter operations", text: $filter)
+            .textFieldStyle(.plain)
+            .focused($isFilterFocused)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
+            .background(.background, in: RoundedRectangle(cornerRadius: 8))
+            .overlay {
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(
+                        isFilterFocused ? Color.accentColor : Color.secondary.opacity(0.25),
+                        lineWidth: isFilterFocused ? 2 : 1
+                    )
+            }
+            .frame(width: 250)
+            .accessibilityLabel("Filter operations by path, method, tag, or summary")
     }
 
     @ViewBuilder
