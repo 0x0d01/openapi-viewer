@@ -1,5 +1,6 @@
 import SwaggerUIBundle from 'swagger-ui-dist/swagger-ui-es-bundle.js';
 import {
+  createDocumentOutline,
   createInlineSpecBasePlugin,
   createViewerBridge,
   matchesOperationText,
@@ -13,12 +14,113 @@ let activeFilter = '';
 let activeMountReady = false;
 let operationObserver = null;
 
+function findOutlineTarget(target) {
+  if (!target || !activeMount) return null;
+  if (target.kind === 'tag') {
+    return [...activeMount.querySelectorAll('.opblock-tag')].find(
+      (heading) => heading.dataset.tag === target.tag,
+    );
+  }
+  if (target.kind === 'operation') {
+    const section = [
+      ...activeMount.querySelectorAll('.opblock-tag-section'),
+    ].find(
+      (candidate) =>
+        candidate.querySelector('.opblock-tag')?.dataset.tag === target.tag,
+    );
+    return [...(section?.querySelectorAll('.opblock') ?? [])].find(
+      (operation) =>
+        operation
+          .querySelector('.opblock-summary-method')
+          ?.textContent.trim()
+          .toLowerCase() === target.method &&
+        operation.querySelector('.opblock-summary-path')?.textContent.trim() ===
+          target.path,
+    );
+  }
+  if (target.kind === 'schema') {
+    return document.getElementById(`model-${target.name}`);
+  }
+  return null;
+}
+
+function scrollToOutlineTarget(target) {
+  const element = findOutlineTarget(target);
+  if (!element) return;
+  if (target.kind === 'operation') {
+    const heading = element
+      .closest('.opblock-tag-section')
+      ?.querySelector('.opblock-tag');
+    if (heading?.dataset.isOpen === 'false') heading.click();
+  }
+  const container = document.getElementById('swagger-ui');
+  const scroll = () => {
+    const top =
+      element.getBoundingClientRect().top -
+      container.getBoundingClientRect().top;
+    container.scrollTo({
+      top: container.scrollTop + top - 16,
+      behavior: 'smooth',
+    });
+  };
+  if (target.kind === 'operation') {
+    requestAnimationFrame(() => requestAnimationFrame(scroll));
+  } else {
+    scroll();
+  }
+}
+
+function renderOutline(spec) {
+  const sidebar = document.getElementById('outline-sidebar');
+  const tree = document.getElementById('outline-tree');
+  const items = createDocumentOutline(spec);
+  const createList = (nodes) => {
+    const list = document.createElement('ul');
+    for (const node of nodes) {
+      const item = document.createElement('li');
+      if (node.target) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = node.label;
+        button.addEventListener('click', () =>
+          scrollToOutlineTarget(node.target),
+        );
+        item.append(button);
+      } else {
+        const label = document.createElement('span');
+        label.textContent = node.label;
+        item.append(label);
+      }
+      if (node.children?.length) item.append(createList(node.children));
+      list.append(item);
+    }
+    return list;
+  };
+  tree.replaceChildren(createList(items));
+  sidebar.hidden = items.length === 0;
+}
+
+document.getElementById('outline-toggle').addEventListener('click', (event) => {
+  const button = event.currentTarget;
+  const expanded = button.getAttribute('aria-expanded') === 'true';
+  button.setAttribute('aria-expanded', String(!expanded));
+  button.setAttribute('aria-label', expanded ? 'Show outline' : 'Hide outline');
+  button.title = expanded ? 'Show outline' : 'Hide outline';
+  button.textContent = expanded ? '›' : '‹';
+  document
+    .getElementById('viewer-shell')
+    .classList.toggle('outline-collapsed', expanded);
+});
+
 function renderSpec(spec, { query }) {
   return new Promise((resolve, reject) => {
     const container = document.getElementById('swagger-ui');
     const mount = document.createElement('div');
     mount.id = `swagger-ui-mount-${++mountSequence}`;
     activeMount = mount;
+    container.scrollTop = 0;
+    document.getElementById('outline-tree').scrollTop = 0;
+    renderOutline(spec);
     activeFilter = query;
     activeMountReady = false;
     operationObserver?.disconnect();
@@ -112,6 +214,8 @@ const bridge = createViewerBridge({
     activeMountReady = false;
     operationObserver?.disconnect();
     operationObserver = null;
+    document.getElementById('outline-sidebar').hidden = true;
+    document.getElementById('outline-tree').replaceChildren();
     document.getElementById('swagger-ui').replaceChildren();
   },
   updateFilter: ({ query }) => {

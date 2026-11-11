@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import {
   countOperations,
+  createDocumentOutline,
   createInlineSpecBasePlugin,
   createViewerBridge,
   matchesOperationText,
@@ -219,6 +220,57 @@ test('matches operation text across path, method, tag, and summary fields', () =
   }
   assert.equal(matchesOperationText(operationText, 'nothing'), false);
   assert.equal(matchesOperationText(operationText, '  '), true);
+});
+
+test('builds a hierarchical outline for tagged operations and schemas', async () => {
+  const parsed = parseSpec(await fixture('nested-api.yaml'), 'yaml');
+  const outline = createDocumentOutline(parsed.spec);
+
+  assert.deepEqual(
+    outline.map((node) => node.label),
+    ['pets', 'Components'],
+  );
+  assert.deepEqual(
+    outline[0].children.map((node) => node.label),
+    ['GET /pets/{petId}', 'POST /pets'],
+  );
+  assert.equal(outline[0].target.kind, 'tag');
+  assert.deepEqual(outline[0].children[0].target, {
+    kind: 'operation',
+    tag: 'pets',
+    method: 'get',
+    path: '/pets/{petId}',
+  });
+  assert.equal(outline[1].children[0].label, 'Schemas');
+  assert.deepEqual(
+    outline[1].children[0].children.map((node) => node.label),
+    ['PetId', 'Pet', 'Owner', 'Address'],
+  );
+});
+
+test('groups untagged path operations under the default tag', () => {
+  const parsed = parseSpec(
+    'openapi: 3.0.3\ninfo: { title: API, version: 1 }\npaths:\n  /status:\n    get:\n      responses: { "200": { description: OK } }\n',
+    'yaml',
+  );
+
+  assert.deepEqual(createDocumentOutline(parsed.spec), [
+    {
+      label: 'default',
+      target: { kind: 'tag', tag: 'default' },
+      children: [
+        {
+          label: 'GET /status',
+          target: {
+            kind: 'operation',
+            tag: 'default',
+            method: 'get',
+            path: '/status',
+          },
+        },
+      ],
+    },
+  ]);
 });
 
 test('clears the previous rendering before reporting a failed new load', async () => {

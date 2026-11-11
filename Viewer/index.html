@@ -13,6 +13,19 @@
     <script defer src="viewer.js"></script>
   </head>
   <body>
-    <main id="swagger-ui" aria-live="polite"></main>
+    <div id="viewer-shell">
+      <aside id="outline-sidebar" aria-label="Document outline" hidden>
+        <button
+          id="outline-toggle"
+          type="button"
+          aria-expanded="true"
+          aria-controls="outline-tree"
+        >
+          Hide outline
+        </button>
+        <nav id="outline-tree" aria-label="OpenAPI document outline"></nav>
+      </aside>
+      <main id="swagger-ui" aria-live="polite"></main>
+    </div>
   </body>
 </html>

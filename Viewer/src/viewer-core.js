@@ -11,6 +11,56 @@ const HTTP_METHODS = new Set([
   'patch',
   'trace',
 ]);
+
+export function createDocumentOutline(spec) {
+  const operationsByTag = new Map();
+  for (const [path, pathItem] of Object.entries(spec.paths ?? {})) {
+    if (!pathItem || typeof pathItem !== 'object' || Array.isArray(pathItem))
+      continue;
+    for (const [method, operation] of Object.entries(pathItem)) {
+      if (!HTTP_METHODS.has(method.toLowerCase())) continue;
+      const tags =
+        Array.isArray(operation?.tags) && operation.tags.length
+          ? operation.tags
+          : ['default'];
+      for (const tag of tags) {
+        if (typeof tag !== 'string') continue;
+        if (!operationsByTag.has(tag)) operationsByTag.set(tag, []);
+        operationsByTag.get(tag).push({
+          label: `${method.toUpperCase()} ${path}`,
+          target: {
+            kind: 'operation',
+            tag,
+            method: method.toLowerCase(),
+            path,
+          },
+        });
+      }
+    }
+  }
+
+  const children = [...operationsByTag].map(([tag, operations]) => ({
+    label: tag,
+    target: { kind: 'tag', tag },
+    children: operations,
+  }));
+  const schemaNames = Object.keys(spec.components?.schemas ?? {});
+  if (schemaNames.length) {
+    children.push({
+      label: 'Components',
+      children: [
+        {
+          label: 'Schemas',
+          children: schemaNames.map((name) => ({
+            label: name,
+            target: { kind: 'schema', name },
+          })),
+        },
+      ],
+    });
+  }
+  return children;
+}
 const MAP_FIELDS = new Set([
   '$defs',
   'callbacks',
