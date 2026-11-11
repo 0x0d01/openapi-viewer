@@ -10,6 +10,8 @@
 	<string>1.0</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.openai.OpenAPIViewer</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
 	<key>CFBundleName</key>
 	<string>OpenAPI Viewer</string>
 	<key>CFBundlePackageType</key>

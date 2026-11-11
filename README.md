@@ -35,7 +35,7 @@ App Store distribution are outside this initial version.
 
 Run `make build` from the repository root to install the pinned npm
 dependencies, build the bundled viewer assets, and build the Release arm64 app.
-The app is written to `.build/Build/Products/Release/OpenAPIViewer.app`.
+The app is written to `.build/Build/Products/Release/OpenAPIViewer.app`. Run `make install` to build it and copy it to `/Applications/OpenAPIViewer.app`.
 
 For individual build and verification steps, run these commands from the
 repository root. Build the bundled viewer assets before building the Xcode app:
