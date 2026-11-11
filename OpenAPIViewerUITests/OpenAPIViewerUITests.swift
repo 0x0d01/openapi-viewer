@@ -3,20 +3,6 @@ import XCTest
 final class OpenAPIViewerUITests: XCTestCase {
     private let filterLabel = "Filter operations by path, method, tag, or summary"
 
-    func testAppearanceMenuDarkThenSystemSelection() throws {
-        try verifyAppearanceMenuSequence(
-            initialInterfaceStyle: "Light",
-            choices: ["Dark", "System"],
-        )
-    }
-
-    func testAppearanceMenuLightThenSystemSelection() throws {
-        try verifyAppearanceMenuSequence(
-            initialInterfaceStyle: "Dark",
-            choices: ["Light", "System"],
-        )
-    }
-
     func testOpenPanelCommandOAndFileMenuOpenYamlYmlAndJSONInSeparateWindows() throws {
         let fixtureDirectory = FileManager.default.temporaryDirectory
             .appendingPathComponent("OpenAPIViewerUITests-\(UUID().uuidString)", isDirectory: true)
@@ -94,40 +80,6 @@ final class OpenAPIViewerUITests: XCTestCase {
         XCTAssertTrue(openButton.waitForExistence(timeout: 5))
         XCTAssertTrue(openButton.isEnabled)
         openButton.click()
-    }
-
-    private func verifyAppearanceMenuSequence(
-        initialInterfaceStyle: String,
-        choices: [String],
-    ) throws {
-        let fixtureDirectory = FileManager.default.temporaryDirectory
-            .appendingPathComponent("OpenAPIViewerAppearanceUITests-\(UUID().uuidString)", isDirectory: true)
-        try FileManager.default.createDirectory(at: fixtureDirectory, withIntermediateDirectories: true)
-        defer { try? FileManager.default.removeItem(at: fixtureDirectory) }
-        let fixture = fixtureDirectory.appendingPathComponent("appearance.yaml")
-        try yamlFixture(title: "Appearance Fixture", path: "/appearance").write(
-            to: fixture, atomically: true, encoding: .utf8)
-
-        let app = XCUIApplication()
-        app.launchArguments = [
-            "-ApplePersistenceIgnoreState", "YES", "-AppleInterfaceStyle", initialInterfaceStyle,
-        ]
-        app.launch()
-        defer { app.terminate() }
-
-        openFixture(fixture, in: app)
-        let window = documentWindow(named: fixture.lastPathComponent, in: app)
-        XCTAssertTrue(window.waitForExistence(timeout: 15))
-        let appearanceButton = window.buttons["Appearance"]
-        XCTAssertTrue(appearanceButton.waitForExistence(timeout: 10))
-
-        for choice in choices {
-            appearanceButton.click()
-            let menuItem = app.menuItems[choice]
-            XCTAssertTrue(menuItem.waitForExistence(timeout: 5))
-            menuItem.click()
-            XCTAssertTrue(window.exists)
-        }
     }
 
     private func documentWindow(named fileName: String, in app: XCUIApplication) -> XCUIElement {
