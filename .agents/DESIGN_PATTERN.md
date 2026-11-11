@@ -5,6 +5,7 @@
 - SwiftUI owns windows, document opening, toolbar state, appearance, and user-visible file errors.
 - `FileDocument` stores a read-only UTF-8 source snapshot and any read error. `DocumentGroup` supplies the source URL separately to `DocumentView`; file access and reload use coordinated reads, and JavaScript never reads user files directly.
 - Each window owns its document and web view state. A new UUID identifies each load so late JavaScript results cannot affect a newer snapshot.
+- When appearance is System, observe `NSApp.effectiveAppearance`, not the window's SwiftUI color-scheme environment, because that window may be forced to Light or Dark. The document appearance state owns and releases the weak KVO observation; explicit window choices remain local.
 - The viewer is loaded from bundled `Viewer/dist` resources with read access scoped to that directory. No development server or remote resource is used at runtime.
 - Finder file drops are registered by the native `FileDropWKWebView`, because Finder drags did not reach the enclosing SwiftUI drop handler in the tested WebKit view. The adapter accepts local file URLs from the pasteboard and forwards them through `DocumentView.openLocalFile` into `NSDocumentController`; JavaScript never handles dropped files. Clear the adapter callback when the web view is dismantled.
 

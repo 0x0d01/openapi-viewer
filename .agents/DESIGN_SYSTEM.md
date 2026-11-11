@@ -9,6 +9,7 @@
 ## Appearance and status
 
 - Follow the system light or dark appearance by default and send the effective appearance to the viewer after readiness and whenever it changes.
+- Resolve System from the observed application appearance so a window's explicit preferred color scheme cannot feed back into the system selection, and so changes while System is selected update the viewer.
 - Show a clear loading state while a document is read or rendered. Show actionable errors in the document window while retaining the native toolbar where possible.
 - Empty state: explain that the user can open or drop an OpenAPI YAML or JSON file.
 - Keep status and error text concise; include available line and column details for parser diagnostics.

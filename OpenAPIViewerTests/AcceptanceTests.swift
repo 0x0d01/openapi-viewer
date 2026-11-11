@@ -481,6 +481,109 @@ final class AcceptanceTests: XCTestCase {
         XCTAssertTrue(lightAppearance)
     }
 
+    func testDocumentViewSystemAppearanceDoesNotInheritWindowOverride() async throws {
+        let originalAppearance = NSApp.appearance
+        defer { NSApp.appearance = originalAppearance }
+
+        NSApp.appearance = NSAppearance(named: .aqua)
+        let appearanceState = DocumentAppearanceState()
+        let testWindow = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 1100, height: 850),
+            styleMask: [.titled, .closable, .resizable],
+            backing: .buffered,
+            defer: false,
+        )
+        testWindow.isReleasedWhenClosed = false
+        testWindow.contentView = NSHostingView(
+            rootView: DocumentView(
+                document: SpecDocument(text: simpleSpec(path: "/document-appearance")),
+                fileURL: URL(fileURLWithPath: "/tmp/document-appearance.yaml"),
+                appearanceState: appearanceState,
+            )
+        )
+        testWindow.makeKeyAndOrderFront(nil)
+        defer { testWindow.orderOut(nil); testWindow.close() }
+
+        let documentHostingView = try XCTUnwrap(testWindow.contentView)
+        let webView = try await waitForDocumentWebView(in: documentHostingView)
+        appearanceState.choice = .dark
+        try await assertDocumentAppearance("dark", in: webView, window: testWindow)
+        appearanceState.choice = .system
+        try await assertDocumentAppearance("light", in: webView, window: testWindow)
+
+        NSApp.appearance = NSAppearance(named: .darkAqua)
+        try await assertDocumentAppearance("dark", in: webView, window: testWindow)
+        appearanceState.choice = .light
+        try await assertViewerAppearance("light", in: webView)
+        appearanceState.choice = .system
+        try await assertDocumentAppearance("dark", in: webView, window: testWindow)
+
+        let secondAppearanceState = DocumentAppearanceState()
+        secondAppearanceState.choice = .light
+        let secondWindow = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 900, height: 700),
+            styleMask: [.titled, .closable, .resizable],
+            backing: .buffered,
+            defer: false,
+        )
+        secondWindow.isReleasedWhenClosed = false
+        secondWindow.contentView = NSHostingView(
+            rootView: DocumentView(
+                document: SpecDocument(text: simpleSpec(path: "/second-appearance")),
+                fileURL: URL(fileURLWithPath: "/tmp/second-appearance.yaml"),
+                appearanceState: secondAppearanceState,
+            )
+        )
+        secondWindow.makeKeyAndOrderFront(nil)
+        defer { secondWindow.orderOut(nil); secondWindow.close() }
+        let secondHostingView = try XCTUnwrap(secondWindow.contentView)
+        let secondWebView = try await waitForDocumentWebView(in: secondHostingView)
+        try await assertViewerAppearance("light", in: secondWebView)
+        secondAppearanceState.choice = .dark
+        try await assertViewerAppearance("dark", in: secondWebView)
+        try await assertDocumentAppearance("dark", in: webView, window: testWindow)
+    }
+
+    private func waitForDocumentWebView(in view: NSView) async throws -> WKWebView {
+        let deadline = ContinuousClock.now + .seconds(20)
+        while ContinuousClock.now < deadline {
+            if let webView = findWebView(in: view) { return webView }
+            try await Task.sleep(for: .milliseconds(100))
+        }
+        XCTFail("DocumentView did not create its bundled WKWebView")
+        throw NSError(domain: "OpenAPIViewerTests", code: 1)
+    }
+
+    private func assertDocumentAppearance(
+        _ expected: String,
+        in webView: WKWebView,
+        window: NSWindow,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async throws {
+        try await assertViewerAppearance(expected, in: webView, file: file, line: line)
+        let isDark = expected == "dark"
+        let expectedNativeAppearance: NSAppearance.Name = isDark ? .darkAqua : .aqua
+        XCTAssertEqual(
+            window.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]), expectedNativeAppearance,
+            "Native window did not become \(expected)", file: file, line: line)
+    }
+
+    private func assertViewerAppearance(
+        _ expected: String,
+        in webView: WKWebView,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async throws {
+        let isDark = expected == "dark"
+        let expectedBackground = isDark ? "rgb(28, 28, 30)" : "rgb(255, 255, 255)"
+        let matches = try await waitForJavaScript(
+            "document.documentElement.dataset.appearance === '\(expected)' && getComputedStyle(document.body).backgroundColor === '\(expectedBackground)'",
+            in: webView,
+        )
+        XCTAssertTrue(matches, "Viewer content did not become \(expected)", file: file, line: line)
+    }
+
     func testBridgeMessagesRemainAcceptedAfterDeepLinkFragmentChanges() async throws {
         let loadID = "fragment-\(UUID().uuidString)"
         let render = state.expectRender(loadID: loadID)

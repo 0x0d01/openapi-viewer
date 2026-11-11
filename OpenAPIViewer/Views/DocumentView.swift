@@ -2,23 +2,27 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct DocumentView: View {
-    @Environment(\.colorScheme) private var systemColorScheme
     @State private var sourceText: String?
     @State private var loadError: String?
     @State private var isLoading = true
     @State private var isReadingFromDisk = false
     @State private var isViewerReady = false
     @State private var filter = ""
-    @State private var appearance: AppearanceChoice = .system
+    @StateObject private var appearanceState: DocumentAppearanceState
     @State private var loadID = UUID().uuidString
     @State private var reloadID = 0
 
     let document: SpecDocument
     let fileURL: URL?
 
-    init(document: SpecDocument, fileURL: URL?) {
+    init(
+        document: SpecDocument,
+        fileURL: URL?,
+        appearanceState: DocumentAppearanceState = DocumentAppearanceState()
+    ) {
         self.document = document
         self.fileURL = fileURL
+        _appearanceState = StateObject(wrappedValue: appearanceState)
         _sourceText = State(initialValue: document.text)
         _loadError = State(initialValue: document.readError)
         _isLoading = State(initialValue: document.text != nil)
@@ -76,14 +80,10 @@ struct DocumentView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(fileURL?.lastPathComponent ?? "OpenAPI Viewer")
-                    .lineLimit(1)
-                    .help(fileURL?.path ?? "OpenAPI Viewer")
-            }
             ToolbarItem(placement: .automatic) {
                 TextField("Filter operations", text: $filter)
                     .textFieldStyle(.roundedBorder)
+                    .padding(.leading, 8)
                     .frame(minWidth: 190, idealWidth: 250)
                     .accessibilityLabel("Filter operations by path, method, tag, or summary")
             }
@@ -96,7 +96,7 @@ struct DocumentView: View {
             }
             ToolbarItem(placement: .automatic) {
                 Menu {
-                    Picker("Appearance", selection: $appearance) {
+                    Picker("Appearance", selection: $appearanceState.choice) {
                         ForEach(AppearanceChoice.allCases) { choice in
                             Text(choice.label).tag(choice)
                         }
@@ -108,7 +108,7 @@ struct DocumentView: View {
             }
         }
         .frame(minWidth: 720, minHeight: 480)
-        .preferredColorScheme(appearance.colorScheme)
+        .preferredColorScheme(appearanceState.choice.colorScheme)
         .onDrop(of: [UTType.fileURL], isTargeted: nil, perform: openDroppedFile)
         .onChange(of: document.text) { _, newValue in
             sourceText = newValue
@@ -129,8 +129,8 @@ struct DocumentView: View {
     }
 
     private var effectiveAppearance: String {
-        switch appearance {
-        case .system: systemColorScheme == .dark ? "dark" : "light"
+        switch appearanceState.choice {
+        case .system: appearanceState.systemAppearance
         case .light: "light"
         case .dark: "dark"
         }
@@ -212,7 +212,7 @@ struct DocumentView: View {
     }
 }
 
-private enum AppearanceChoice: String, CaseIterable, Identifiable {
+enum AppearanceChoice: String, CaseIterable, Identifiable {
     case system
     case light
     case dark
@@ -233,5 +233,26 @@ private enum AppearanceChoice: String, CaseIterable, Identifiable {
         case .light: .light
         case .dark: .dark
         }
+    }
+}
+
+final class DocumentAppearanceState: ObservableObject {
+    @Published var choice: AppearanceChoice = .system
+    @Published private(set) var systemAppearance: String
+
+    private var appearanceObservation: NSKeyValueObservation?
+
+    init() {
+        systemAppearance = Self.resolve(NSApp.effectiveAppearance)
+        appearanceObservation = NSApp.observe(\.effectiveAppearance, options: [.new]) { [weak self] app, _ in
+            let nextAppearance = Self.resolve(app.effectiveAppearance)
+            DispatchQueue.main.async {
+                self?.systemAppearance = nextAppearance
+            }
+        }
+    }
+
+    private static func resolve(_ appearance: NSAppearance) -> String {
+        appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? "dark" : "light"
     }
 }
