@@ -83,7 +83,8 @@ struct DocumentView: View {
             ToolbarItem(placement: .principal) {
                 TextField("Filter operations", text: $filter)
                     .textFieldStyle(.roundedBorder)
-                    .frame(minWidth: 190, idealWidth: 250)
+                    .frame(width: 250)
+                    .padding(.trailing, 14)
                     .accessibilityLabel("Filter operations by path, method, tag, or summary")
             }
             ToolbarItem(placement: .automatic) {
@@ -95,16 +96,20 @@ struct DocumentView: View {
             }
             ToolbarItem(placement: .automatic) {
                 Menu {
-                    ForEach(AppearanceChoice.allCases) { choice in
-                        Button {
-                            appearanceState.choice = choice
-                        } label: {
-                            if appearanceState.choice == choice {
-                                Label(choice.label, systemImage: "checkmark")
-                            } else {
-                                Text(choice.label)
-                            }
-                        }
+                    Button {
+                        appearanceState.choice = .system
+                    } label: {
+                        appearanceChoiceLabel(.system)
+                    }
+                    Button {
+                        appearanceState.choice = .light
+                    } label: {
+                        appearanceChoiceLabel(.light)
+                    }
+                    Button {
+                        appearanceState.choice = .dark
+                    } label: {
+                        appearanceChoiceLabel(.dark)
                     }
                 } label: {
                     Label("Appearance", systemImage: "circle.lefthalf.filled")
@@ -126,6 +131,15 @@ struct DocumentView: View {
             sourceText = nil
             loadError = newValue
             isLoading = false
+        }
+    }
+
+    @ViewBuilder
+    private func appearanceChoiceLabel(_ choice: AppearanceChoice) -> some View {
+        if appearanceState.choice == choice {
+            Label(choice.label, systemImage: "checkmark")
+        } else {
+            Text(choice.label)
         }
     }
 
