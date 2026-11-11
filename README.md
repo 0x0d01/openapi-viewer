@@ -33,8 +33,12 @@ App Store distribution are outside this initial version.
 
 ## Build and verify
 
-Run these commands from the repository root. Build the bundled viewer assets
-before building the Xcode app:
+Run `make build` from the repository root to install the pinned npm
+dependencies, build the bundled viewer assets, and build the Release arm64 app.
+The app is written to `.build/Build/Products/Release/OpenAPIViewer.app`.
+
+For individual build and verification steps, run these commands from the
+repository root. Build the bundled viewer assets before building the Xcode app:
 
 ```sh
 npm ci
@@ -52,7 +56,14 @@ To run from Xcode, first build the viewer assets with `npm run build`, open
 `OpenAPIViewer.xcodeproj`, select the shared **OpenAPIViewer** scheme and **My
 Mac** destination, then choose **Product > Run**.
 
-For a predictable Release app location, build and launch it with:
+To build and launch the app with the convenience target, run:
+
+```sh
+make build
+open .build/Build/Products/Release/OpenAPIViewer.app
+```
+
+The equivalent Xcode command for a predictable Release app location is:
 
 ```sh
 xcodebuild -project OpenAPIViewer.xcodeproj -scheme OpenAPIViewer -configuration Release -destination 'platform=macOS,arch=arm64' -derivedDataPath .build build
