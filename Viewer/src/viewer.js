@@ -126,7 +126,6 @@ document.getElementById('outline-toggle').addEventListener('click', (event) => {
   button.setAttribute('aria-expanded', String(!expanded));
   button.setAttribute('aria-label', expanded ? 'Show outline' : 'Hide outline');
   button.title = expanded ? 'Show outline' : 'Hide outline';
-  button.textContent = expanded ? '›' : '‹';
   document
     .getElementById('viewer-shell')
     .classList.toggle('outline-collapsed', expanded);

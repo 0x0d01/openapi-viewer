@@ -36,13 +36,34 @@ body {
 #outline-toggle {
   align-self: flex-end;
   flex: 0 0 auto;
-  min-width: 42px;
-  min-height: 36px;
+  display: grid;
+  width: 42px;
+  height: 36px;
+  place-items: center;
   border: 0;
   background: transparent;
   color: inherit;
   cursor: pointer;
   font: inherit;
+}
+
+#outline-toggle::before {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  content: '';
+  transform: rotate(135deg);
+}
+
+#outline-toggle[aria-expanded='false']::before {
+  transform: rotate(-45deg);
+}
+
+#outline-toggle:focus-visible {
+  border-radius: 5px;
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
 }
 
 #outline-tree {
@@ -113,10 +134,6 @@ body {
 
 #viewer-shell.outline-collapsed #outline-sidebar {
   flex-basis: 42px;
-}
-
-#viewer-shell.outline-collapsed #outline-toggle {
-  align-self: center;
 }
 
 #viewer-shell.outline-collapsed #outline-tree {
