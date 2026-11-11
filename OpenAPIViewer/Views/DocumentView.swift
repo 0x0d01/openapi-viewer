@@ -84,7 +84,6 @@ struct DocumentView: View {
                 TextField("Filter operations", text: $filter)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 250)
-                    .padding(.trailing, 14)
                     .accessibilityLabel("Filter operations by path, method, tag, or summary")
             }
             ToolbarItem(placement: .automatic) {

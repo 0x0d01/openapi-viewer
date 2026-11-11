@@ -4,7 +4,7 @@
 
 - Use standard macOS SwiftUI document windows, menus, toolbar items, buttons, and search fields so keyboard behavior and accessibility follow platform conventions.
 - Keep the toolbar compact: document identity, operation filter, reload, and appearance controls. Do not rebuild Swagger UI's endpoint or schema navigation in SwiftUI.
-- Keep the operation filter at a fixed 250-point width in its own principal toolbar position, with a trailing gap before reload; expose System, Light, and Dark as direct appearance menu choices.
+- Keep the operation filter at a 250-point width in its own principal toolbar position, without extra trailing padding before Reload; expose System, Light, and Dark as direct appearance menu choices.
 - The main content fills the window and resizes with it. Use the system font and native control sizing rather than fixed custom typography or spacing.
 
 ## Appearance and status
