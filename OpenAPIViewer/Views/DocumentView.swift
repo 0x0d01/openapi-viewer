@@ -80,11 +80,15 @@ struct DocumentView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                TextField("Filter operations", text: $filter)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 250)
-                    .accessibilityLabel("Filter operations by path, method, tag, or summary")
+            if #available(macOS 26.0, *) {
+                ToolbarItem(placement: .principal) {
+                    filterField
+                }
+                .sharedBackgroundVisibility(.hidden)
+            } else {
+                ToolbarItem(placement: .principal) {
+                    filterField
+                }
             }
             ToolbarItem(placement: .automatic) {
                 Button(action: reload) {
@@ -131,6 +135,20 @@ struct DocumentView: View {
             loadError = newValue
             isLoading = false
         }
+    }
+
+    private var filterField: some View {
+        TextField("Filter operations", text: $filter)
+            .textFieldStyle(.plain)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
+            .background(.background, in: RoundedRectangle(cornerRadius: 8))
+            .overlay {
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(Color.secondary.opacity(0.25), lineWidth: 1)
+            }
+            .frame(width: 250)
+            .accessibilityLabel("Filter operations by path, method, tag, or summary")
     }
 
     @ViewBuilder
