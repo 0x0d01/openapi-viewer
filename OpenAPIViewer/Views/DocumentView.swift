@@ -34,6 +34,7 @@ struct DocumentView: View {
                     loadID: loadID,
                     filter: filter,
                     appearance: effectiveAppearance,
+                    onOpenFile: openLocalFile,
                     onReady: { isViewerReady = true },
                     onRendered: { _ in
                         guard representedLoadID == loadID else { return }
@@ -189,13 +190,25 @@ struct DocumentView: View {
                 return
             }
             DispatchQueue.main.async {
-                NSDocumentController.shared.openDocument(withContentsOf: url, display: true) { _, _, error in
-                    guard let error else { return }
-                    loadError = "Could not open \(url.lastPathComponent): \(error.localizedDescription)"
-                }
+                openLocalFile(url)
             }
         }
         return true
+    }
+
+    private func openLocalFile(_ url: URL) {
+        guard url.isFileURL else {
+            loadError = "Only local files can be opened from a drop."
+            return
+        }
+
+        NSDocumentController.shared.openDocument(withContentsOf: url, display: true) { _, _, error in
+            if let error {
+                loadError = "Could not open \(url.lastPathComponent): \(error.localizedDescription)"
+                return
+            }
+            NSApp.activate()
+        }
     }
 }
 

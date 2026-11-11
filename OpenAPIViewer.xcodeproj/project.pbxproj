@@ -14,6 +14,8 @@
 		A10000000000000000000006 /* DocumentReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000006 /* DocumentReaderTests.swift */; };
 		A10000000000000000000007 /* OpenAPIViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000007 /* OpenAPIViewerUITests.swift */; };
 		A10000000000000000000008 /* ViewerIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000012 /* ViewerIntegrationTests.swift */; };
+		A10000000000000000000009 /* AcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000013 /* AcceptanceTests.swift */; };
+		A10000000000000000000010 /* DragAndDropUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000014 /* DragAndDropUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +35,8 @@
 		B10000000000000000000010 /* OpenAPIViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenAPIViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10000000000000000000011 /* OpenAPIViewerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenAPIViewerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10000000000000000000012 /* ViewerIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewerIntegrationTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000013 /* AcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptanceTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000014 /* DragAndDropUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,8 +48,8 @@
 /* Begin PBXGroup section */
 		G10000000000000000000001 = {isa = PBXGroup; children = (G10000000000000000000002 /* OpenAPIViewer */, G10000000000000000000003 /* OpenAPIViewerTests */, G10000000000000000000004 /* OpenAPIViewerUITests */, G10000000000000000000005 /* Products */); sourceTree = "<group>"; };
 		G10000000000000000000002 /* OpenAPIViewer */ = {isa = PBXGroup; path = OpenAPIViewer; sourceTree = "<group>"; children = (B10000000000000000000001 /* OpenAPIViewerApp.swift */, G10000000000000000000006 /* Models */, G10000000000000000000007 /* Views */, G10000000000000000000008 /* Resources */); };
-		G10000000000000000000003 /* OpenAPIViewerTests */ = {isa = PBXGroup; path = OpenAPIViewerTests; sourceTree = "<group>"; children = (B10000000000000000000006 /* DocumentReaderTests.swift */, B10000000000000000000012 /* ViewerIntegrationTests.swift */); };
-		G10000000000000000000004 /* OpenAPIViewerUITests */ = {isa = PBXGroup; path = OpenAPIViewerUITests; sourceTree = "<group>"; children = (B10000000000000000000007 /* OpenAPIViewerUITests.swift */); };
+		G10000000000000000000003 /* OpenAPIViewerTests */ = {isa = PBXGroup; path = OpenAPIViewerTests; sourceTree = "<group>"; children = (B10000000000000000000006 /* DocumentReaderTests.swift */, B10000000000000000000012 /* ViewerIntegrationTests.swift */, B10000000000000000000013 /* AcceptanceTests.swift */); };
+		G10000000000000000000004 /* OpenAPIViewerUITests */ = {isa = PBXGroup; path = OpenAPIViewerUITests; sourceTree = "<group>"; children = (B10000000000000000000007 /* OpenAPIViewerUITests.swift */, B10000000000000000000014 /* DragAndDropUITests.swift */); };
 		G10000000000000000000005 /* Products */ = {isa = PBXGroup; name = Products; sourceTree = "<group>"; children = (B10000000000000000000009 /* OpenAPIViewer.app */, B10000000000000000000010 /* OpenAPIViewerTests.xctest */, B10000000000000000000011 /* OpenAPIViewerUITests.xctest */); };
 		G10000000000000000000006 /* Models */ = {isa = PBXGroup; path = Models; sourceTree = "<group>"; children = (B10000000000000000000002 /* SpecDocument.swift */, B10000000000000000000003 /* DocumentReader.swift */); };
 		G10000000000000000000007 /* Views */ = {isa = PBXGroup; path = Views; sourceTree = "<group>"; children = (B10000000000000000000004 /* DocumentView.swift */, B10000000000000000000005 /* ViewerWebView.swift */); };
@@ -68,8 +72,8 @@
 
 /* Begin PBXSourcesBuildPhase section */
 		I10000000000000000000001 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000001 /* OpenAPIViewerApp.swift in Sources */, A10000000000000000000002 /* SpecDocument.swift in Sources */, A10000000000000000000003 /* DocumentReader.swift in Sources */, A10000000000000000000004 /* DocumentView.swift in Sources */, A10000000000000000000005 /* ViewerWebView.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
-		I10000000000000000000002 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000006 /* DocumentReaderTests.swift in Sources */, A10000000000000000000008 /* ViewerIntegrationTests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
-		I10000000000000000000003 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000007 /* OpenAPIViewerUITests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+		I10000000000000000000002 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000006 /* DocumentReaderTests.swift in Sources */, A10000000000000000000008 /* ViewerIntegrationTests.swift in Sources */, A10000000000000000000009 /* AcceptanceTests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
+		I10000000000000000000003 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000007 /* OpenAPIViewerUITests.swift in Sources */, A10000000000000000000010 /* DragAndDropUITests.swift in Sources */); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */

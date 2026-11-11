@@ -8,6 +8,7 @@ struct ViewerWebView: NSViewRepresentable {
     let loadID: String
     let filter: String
     let appearance: String
+    let onOpenFile: (URL) -> Void
     let onReady: () -> Void
     let onRendered: (Int) -> Void
     let onError: (String) -> Void
@@ -28,7 +29,10 @@ struct ViewerWebView: NSViewRepresentable {
         configuration.defaultWebpagePreferences = preferences
         configuration.websiteDataStore = .nonPersistent()
 
-        let webView = WKWebView(frame: .zero, configuration: configuration)
+        let webView = FileDropWKWebView(frame: .zero, configuration: configuration)
+        webView.onFileDrop = { [weak coordinator = context.coordinator] url in
+            coordinator?.openDroppedFile(url)
+        }
         webView.navigationDelegate = context.coordinator
         webView.uiDelegate = context.coordinator
         context.coordinator.webView = webView
@@ -43,6 +47,7 @@ struct ViewerWebView: NSViewRepresentable {
 
     static func dismantleNSView(_ webView: WKWebView, coordinator: Coordinator) {
         webView.configuration.userContentController.removeScriptMessageHandler(forName: "viewer")
+        (webView as? FileDropWKWebView)?.onFileDrop = nil
         webView.navigationDelegate = nil
         webView.uiDelegate = nil
         coordinator.webView = nil
@@ -58,6 +63,7 @@ struct ViewerWebView: NSViewRepresentable {
         private var currentFormat = "yaml"
         private var currentFilter = ""
         private var currentAppearance = "light"
+        private var onOpenFile: (URL) -> Void = { _ in }
         private var onReady: () -> Void = {}
         private var onRendered: (Int) -> Void = { _ in }
         private var onError: (String) -> Void = { _ in }
@@ -66,6 +72,7 @@ struct ViewerWebView: NSViewRepresentable {
             onReady = view.onReady
             onRendered = view.onRendered
             onError = view.onError
+            onOpenFile = view.onOpenFile
 
             let documentChanged =
                 currentLoadID != view.loadID || currentText != view.text || currentFormat != view.format
@@ -123,6 +130,14 @@ struct ViewerWebView: NSViewRepresentable {
                     webView.loadFileURL(index, allowingReadAccessTo: viewerDirectory)
                 }
             }
+        }
+
+        func openDroppedFile(_ url: URL) {
+            guard url.isFileURL else {
+                onError("Only local files can be opened from a drop.")
+                return
+            }
+            onOpenFile(url)
         }
 
         func userContentController(
@@ -241,6 +256,48 @@ struct ViewerWebView: NSViewRepresentable {
                 }
             )
         }
+    }
+}
+
+private final class FileDropWKWebView: WKWebView {
+    var onFileDrop: ((URL) -> Void)?
+
+    override init(frame: CGRect, configuration: WKWebViewConfiguration) {
+        super.init(frame: frame, configuration: configuration)
+        registerForDraggedTypes([.fileURL])
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        registerForDraggedTypes([.fileURL])
+    }
+
+    override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
+        guard firstFileURL(from: sender.draggingPasteboard) != nil else {
+            return super.draggingEntered(sender)
+        }
+        return .copy
+    }
+
+    override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
+        guard firstFileURL(from: sender.draggingPasteboard) != nil else {
+            return super.draggingUpdated(sender)
+        }
+        return .copy
+    }
+
+    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        guard let url = firstFileURL(from: sender.draggingPasteboard) else {
+            return super.performDragOperation(sender)
+        }
+        guard let onFileDrop else { return false }
+        onFileDrop(url)
+        return true
+    }
+
+    private func firstFileURL(from pasteboard: NSPasteboard) -> URL? {
+        let options: [NSPasteboard.ReadingOptionKey: Any] = [.urlReadingFileURLsOnly: true]
+        return (pasteboard.readObjects(forClasses: [NSURL.self], options: options) as? [URL])?.first
     }
 }
 

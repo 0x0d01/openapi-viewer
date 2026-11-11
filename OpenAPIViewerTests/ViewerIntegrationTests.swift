@@ -17,6 +17,7 @@ final class ViewerIntegrationTests: XCTestCase {
             loadID: UUID().uuidString,
             filter: "",
             appearance: "light",
+            onOpenFile: { _ in },
             onReady: { viewerReady.fulfill() },
             onRendered: { operationCount in
                 XCTAssertEqual(operationCount, 1)
